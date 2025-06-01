@@ -33,7 +33,7 @@ const Contact = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className='absolute -bottom-16 left-1/2 -translate-x-1/2 w-full max-w-3xl mx-auto bg-white rounded shadow-lg flex flex-col md:flex-row overflow-hidden'
+            className='absolute -bottom-50 left-1/2 -translate-x-1/2 w-full max-w-3xl mx-auto bg-white rounded shadow-lg flex flex-col md:flex-row overflow-hidden'
         >
             {/* Form liên hệ */}
             <div className='flex-1 p-8 flex flex-col gap-4'>

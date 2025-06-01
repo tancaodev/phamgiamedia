@@ -12,20 +12,24 @@ app.use(bodyParser.json());
 
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
+	secure: false,
 	auth: {
-		user: 'tancaodev.github@gmail.com',
-		pass: 'tancaodev.github',
+		type: 'OAuth2',
+		user: 'thekiet.github@gmail.com',
+		clientId: process.env.GOOGLE_CLIENT_ID,
+		clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+		refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
 	},
 });
 
 app.post('/api/register', async (req, res) => {
 	const { name, email, message } = req.body;
-
+    
 	if (!name || !email || !message) {
 		return res.status(400).json({ message: 'Thiếu thông tin liên hệ' });
 	}
 
-	// Lưu vào file (nếu muốn)
+	// Lưu vào file
 	const csvLine = `"${name}","${email}","${message.replace(/"/g, '""')}"\n`;
 	fs.appendFile('users.csv', csvLine, (err) => {
 		if (err) {
@@ -33,9 +37,9 @@ app.post('/api/register', async (req, res) => {
 		}
 	});
 
-	// Gửi email tới admin hoặc tới chính người dùng
+	// Gửi email người dùng
 	const mailOptions = {
-		from: 'tancaodev.github@gmail.com',
+		from: 'thekiet.github@gmail.com',
 		to: email,
 		subject: 'Thông tin liên hệ mới từ website',
 		html: `<h2>Thông tin liên hệ mới</h2>
